@@ -2,12 +2,14 @@ import { useState } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light'
 import java from 'react-syntax-highlighter/dist/esm/languages/prism/java'
 import groovy from 'react-syntax-highlighter/dist/esm/languages/prism/groovy'
+import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash'
 import vscDarkPlus from 'react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus'
 
 SyntaxHighlighter.registerLanguage('java', java)
 SyntaxHighlighter.registerLanguage('groovy', groovy)
+SyntaxHighlighter.registerLanguage('bash', bash)
 
-type Tab = 'overview' | 'mapper' | 'fluid' | 'walker' | 'calculator' | 'integration' | 'config' | 'build'
+type Tab = 'overview' | 'compile' | 'mapper' | 'fluid' | 'walker' | 'calculator' | 'integration' | 'config' | 'build'
 
 interface FileContent {
   id: Tab
@@ -19,6 +21,7 @@ interface FileContent {
 
 const files: FileContent[] = [
   { id: 'overview', name: '📋 Обзор', path: '', language: 'markdown', description: 'Общая документация мода' },
+  { id: 'compile', name: '🔨 Компиляция', path: '', language: 'bash', description: 'Инструкция по сборке' },
   { id: 'mapper', name: 'GTEMCMapper', path: 'com/gtemc/emc/GTEMCMapper.java', language: 'java', description: 'Основной EMC-маппер' },
   { id: 'fluid', name: 'FluidEMCRegistry', path: 'com/gtemc/emc/FluidEMCRegistry.java', language: 'java', description: 'Реестр EMC жидкостей' },
   { id: 'walker', name: 'RecipeWalker', path: 'com/gtemc/emc/RecipeWalker.java', language: 'java', description: 'Обходчик рецептов GT' },
@@ -119,6 +122,10 @@ function FileContent({ tab }: { tab: Tab }) {
   
   if (tab === 'overview') {
     return <OverviewContent />
+  }
+  
+  if (tab === 'compile') {
+    return <CompileContent />
   }
 
   return (
@@ -321,6 +328,276 @@ function OverviewContent() {
               <span className="text-gray-500"># Поместить в папку mods вместе с ProjectE и GTCEu</span>
             </code>
           </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CompileContent() {
+  return (
+    <div className="space-y-6">
+      {/* Требования */}
+      <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+        <h2 className="text-xl font-bold text-emerald-300 mb-4">📋 Требования для компиляции</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
+            <div className="text-2xl mb-2">☕</div>
+            <h3 className="font-semibold text-gray-200 mb-1">JDK 17</h3>
+            <p className="text-sm text-gray-400">
+              <a href="https://adoptium.net/temurin/releases/?version=17" target="_blank" className="text-emerald-400 hover:underline">
+                Скачать Adoptium Temurin
+              </a>
+            </p>
+          </div>
+          <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
+            <div className="text-2xl mb-2">📦</div>
+            <h3 className="font-semibold text-gray-200 mb-1">Gradle 8.1+</h3>
+            <p className="text-sm text-gray-400">
+              Используется Gradle Wrapper (gradlew)
+            </p>
+          </div>
+          <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/50">
+            <div className="text-2xl mb-2">💻</div>
+            <h3 className="font-semibold text-gray-200 mb-1">IDE (опционально)</h3>
+            <p className="text-sm text-gray-400">
+              IntelliJ IDEA / Eclipse / VS Code
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Быстрый старт */}
+      <div className="bg-gradient-to-br from-emerald-900/30 to-cyan-900/30 rounded-xl border border-emerald-700/50 p-6">
+        <h2 className="text-xl font-bold text-emerald-300 mb-4">⚡ Быстрый старт (TL;DR)</h2>
+        <div className="bg-gray-950 rounded-lg p-4 font-mono text-sm">
+          <div className="text-gray-500 mb-2"># 1. Проверьте Java</div>
+          <div className="text-emerald-300">java -version</div>
+          <div className="text-gray-500 mt-3 mb-2"># 2. Скопируйте файлы мода в папку</div>
+          <div className="text-gray-500"># 3. Обновите CurseMaven ID в build.gradle</div>
+          <div className="text-gray-500 mt-3 mb-2"># 4. Соберите мод</div>
+          <div className="text-emerald-300">./gradlew build</div>
+          <div className="text-gray-500 mt-3 mb-2"># 5. JAR будет в build/libs/</div>
+          <div className="text-emerald-300">ls build/libs/</div>
+        </div>
+      </div>
+
+      {/* Пошаговая инструкция */}
+      <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+        <h2 className="text-xl font-bold text-cyan-300 mb-4">🔧 Пошаговая инструкция</h2>
+        <div className="space-y-4">
+          
+          <Step number={1} title="Подготовка проекта">
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300">
+              <div className="text-gray-500"># Создайте папку и скопируйте файлы мода</div>
+              <div>mkdir gtcemc-addon && cd gtcemc-addon</div>
+              <div className="text-gray-500 mt-2"># Скопируйте содержимое mod-src/ сюда</div>
+              <div className="text-gray-500"># Структура:</div>
+              <div className="text-gray-500"># ├── build.gradle</div>
+              <div className="text-gray-500"># ├── gradle.properties</div>
+              <div className="text-gray-500"># └── src/main/java/com/gtemc/...</div>
+            </div>
+          </Step>
+
+          <Step number={2} title="Установка Gradle Wrapper">
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300">
+              <div className="text-gray-500"># Создайте файл gradle/wrapper/gradle-wrapper.properties:</div>
+              <div className="mt-2">distributionBase=GRADLE_USER_HOME</div>
+              <div>distributionPath=wrapper/dists</div>
+              <div>distributionUrl=https\://services.gradle.org/distributions/gradle-8.1.1-bin.zip</div>
+              <div>zipStoreBase=GRADLE_USER_HOME</div>
+              <div>zipStorePath=wrapper/dists</div>
+            </div>
+            <div className="mt-2 text-sm text-gray-400">
+              Или используйте готовый gradlew из Forge MDK: <br/>
+              <a href="https://github.com/MinecraftForge/MinecraftForge" target="_blank" className="text-cyan-400 hover:underline">
+                github.com/MinecraftForge/MinecraftForge
+              </a>
+            </div>
+          </Step>
+
+          <Step number={3} title="Обновление зависимостей (ВАЖНО!)">
+            <p className="text-sm text-gray-400 mb-2">
+              Откройте <code className="text-emerald-300 bg-gray-800 px-1 rounded">build.gradle</code> и обновите CurseMaven ID 
+              на актуальные версии для 1.20.1:
+            </p>
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300">
+              <div className="text-gray-500">// build.gradle - секция dependencies</div>
+              <div className="mt-1">dependencies {'{'}</div>
+              <div className="pl-4">minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'</div>
+              <div className="pl-4 mt-2 text-gray-500">// Найдите актуальный FILE_ID на CurseForge!</div>
+              <div className="pl-4 text-yellow-300">implementation fg.deobf('curse.maven:projecte-226410:<span className="text-red-400">ВАШ_ID</span>')</div>
+              <div className="pl-4 text-yellow-300">implementation fg.deobf('curse.maven:gtceu-226410:<span className="text-red-400">ВАШ_ID</span>')</div>
+              <div className="pl-4">implementation fg.deobf('curse.maven:codechickenlib-242818:<span className="text-red-400">ВАШ_ID</span>')</div>
+              <div className="pl-4">implementation fg.deobf('curse.maven:ldlib-626668:<span className="text-red-400">ВАШ_ID</span>')</div>
+              <div>{'}'}</div>
+            </div>
+            <div className="mt-3 p-3 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
+              <p className="text-sm text-yellow-200">
+                <strong>⚠️ Как найти FILE_ID:</strong> Перейдите на CurseForge → Files → выберите версию для 1.20.1 → 
+                ID в URL (например: curseforge.com/.../files/<span className="text-emerald-300">4860000</span>)
+              </p>
+            </div>
+          </Step>
+
+          <Step number={4} title="Проверка Java версии">
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300">
+              <div>java -version</div>
+              <div className="text-gray-500"># Должно показать: openjdk version "17.x.x"</div>
+              <div className="mt-2">javac -version</div>
+              <div className="text-gray-500"># Должно показать: javac 17.x.x</div>
+            </div>
+            <div className="mt-2 text-sm text-gray-400">
+              Если версия не 17, установите <code className="text-emerald-300 bg-gray-800 px-1 rounded">JAVA_HOME</code>:
+            </div>
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300 mt-2">
+              <div className="text-gray-500"># Windows:</div>
+              <div>set JAVA_HOME=C:\Program Files\Java\jdk-17</div>
+              <div className="mt-2 text-gray-500"># Linux/Mac:</div>
+              <div>export JAVA_HOME=/usr/lib/jvm/java-17-openjdk</div>
+            </div>
+          </Step>
+
+          <Step number={5} title="Сборка мода">
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300">
+              <div className="text-gray-500"># Windows:</div>
+              <div className="text-emerald-300">gradlew.bat build</div>
+              <div className="mt-2 text-gray-500"># Linux/Mac:</div>
+              <div className="text-emerald-300">./gradlew build</div>
+            </div>
+            <div className="mt-2 p-3 bg-blue-900/20 border border-blue-700/50 rounded-lg">
+              <p className="text-sm text-blue-200">
+                <strong>💡 Первая сборка</strong> займёт 5-15 минут (скачивание зависимостей). 
+                Последующие сборки будут быстрее.
+              </p>
+            </div>
+            <div className="mt-2 text-sm text-gray-400">Ожидаемый результат:</div>
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300 mt-1">
+              <div className="text-green-400">BUILD SUCCESSFUL in 5m 23s</div>
+            </div>
+          </Step>
+
+          <Step number={6} title="Установка JAR в Minecraft">
+            <div className="bg-gray-950 rounded-lg p-3 font-mono text-xs text-gray-300">
+              <div className="text-gray-500"># JAR файл будет здесь:</div>
+              <div className="text-emerald-300">build/libs/gtcemodern-emc-addon-1.0.0.jar</div>
+              <div className="mt-2 text-gray-500"># Скопируйте в папку mods:</div>
+              <div className="text-gray-500"># Windows: %APPDATA%/.minecraft/mods/</div>
+              <div className="text-gray-500"># Linux: ~/.minecraft/mods/</div>
+              <div className="text-gray-500"># Mac: ~/Library/Application Support/minecraft/mods/</div>
+            </div>
+            <div className="mt-3 p-3 bg-purple-900/20 border border-purple-700/50 rounded-lg">
+              <p className="text-sm text-purple-200">
+                <strong>🎮 Также установите в папку mods:</strong>
+              </p>
+              <ul className="text-sm text-purple-200 mt-1 space-y-1">
+                <li>• ProjectE (для 1.20.1)</li>
+                <li>• GregTech CEu Modern (для 1.20.1)</li>
+                <li>• CodeChickenLib</li>
+                <li>• LDLib</li>
+              </ul>
+            </div>
+          </Step>
+        </div>
+      </div>
+
+      {/* Полезные команды */}
+      <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+        <h2 className="text-xl font-bold text-purple-300 mb-4">🛠️ Полезные команды</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <CommandBlock cmd="./gradlew clean" desc="Очистка предыдущей сборки" />
+          <CommandBlock cmd="./gradlew build -x test" desc="Сборка без тестов (быстрее)" />
+          <CommandBlock cmd="./gradlew build --info" desc="Сборка с подробным выводом" />
+          <CommandBlock cmd="./gradlew runClient" desc="Запуск клиента для тестирования" />
+          <CommandBlock cmd="./gradlew runServer" desc="Запуск сервера для тестирования" />
+          <CommandBlock cmd="./gradlew idea" desc="Генерация файлов для IntelliJ" />
+          <CommandBlock cmd="./gradlew eclipse" desc="Генерация файлов для Eclipse" />
+          <CommandBlock cmd="./gradlew --refresh-dependencies" desc="Обновить зависимости" />
+        </div>
+      </div>
+
+      {/* Решение проблем */}
+      <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+        <h2 className="text-xl font-bold text-red-300 mb-4">🐛 Решение проблем</h2>
+        <div className="space-y-3">
+          <ProblemBlock
+            error="Could not resolve all files for configuration"
+            solution="Неверные CurseMaven ID. Проверьте актуальные ID файлов на CurseForge для 1.20.1"
+          />
+          <ProblemBlock
+            error="Unsupported class file major version 61"
+            solution="Используется Java ниже 17. Установите JDK 17 и проверьте JAVA_HOME"
+          />
+          <ProblemBlock
+            error="package com.gregtechceu.gtceu does not exist"
+            solution="GTCEu не загружен. Проверьте CurseMaven ID и версию для 1.20.1"
+          />
+          <ProblemBlock
+            error="Could not find net.minecraftforge:forge:1.20.1-47.2.0"
+            solution="Добавьте репозиторий Forge в repositories: maven { url = 'https://maven.minecraftforge.net/' }"
+          />
+          <ProblemBlock
+            error="gradlew: Permission denied (Linux/Mac)"
+            solution="Выполните: chmod +x gradlew"
+          />
+        </div>
+      </div>
+
+      {/* Структура проекта */}
+      <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+        <h2 className="text-xl font-bold text-yellow-300 mb-4">📁 Итоговая структура проекта</h2>
+        <div className="bg-gray-950 rounded-lg p-4 font-mono text-xs text-gray-300">
+          <pre>{`gtcemc-addon/
+├── build.gradle                    # Скрипт сборки
+├── gradle.properties               # Свойства сборки
+├── gradle/
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew                         # Linux/Mac wrapper
+├── gradlew.bat                     # Windows wrapper
+├── settings.gradle                 # Настройки проекта
+├── src/main/
+│   ├── java/com/gtemc/
+│   │   ├── GTEMCAddon.java        # @Mod - главный класс
+│   │   ├── config/
+│   │   │   └── GTEMCConfig.java   # Конфигурация
+│   │   └── emc/
+│   │       ├── GTEMCMapper.java   # EMC маппер
+│   │       ├── GTEMCIntegration.java
+│   │       ├── FluidEMCRegistry.java
+│   │       ├── RecipeWalker.java
+│   │       └── EMCCalculator.java
+│   └── resources/
+│       ├── META-INF/mods.toml     # Forge mod descriptor
+│       └── pack.mcmeta
+└── build/libs/                     # ← Результат сборки
+    └── gtcemodern-emc-addon-1.0.0.jar`}</pre>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CommandBlock({ cmd, desc }: { cmd: string; desc: string }) {
+  return (
+    <div className="bg-gray-950 rounded-lg p-3 border border-gray-700/50">
+      <code className="text-emerald-300 text-xs font-mono">{cmd}</code>
+      <p className="text-xs text-gray-500 mt-1">{desc}</p>
+    </div>
+  )
+}
+
+function ProblemBlock({ error, solution }: { error: string; solution: string }) {
+  return (
+    <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/50">
+      <div className="flex items-start gap-2">
+        <span className="text-red-400 text-sm">❌</span>
+        <div>
+          <code className="text-red-300 text-xs font-mono">{error}</code>
+          <p className="text-sm text-gray-400 mt-1">
+            <span className="text-green-400">✅</span> {solution}
+          </p>
         </div>
       </div>
     </div>
