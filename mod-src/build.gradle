@@ -1,0 +1,74 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = '1.0.0'
+group = 'com.gtemc'
+archivesBaseName = 'gtcemodern-emc-addon'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'CurseMaven'
+        url = 'https://www.cursemaven.com'
+    }
+    maven {
+        name = 'JitPack'
+        url = 'https://jitpack.io'
+    }
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
+
+    // ProjectE for Minecraft 1.20.1
+    implementation fg.deobf('curse.maven:projecte-226410:4860000')
+
+    // GregTech CEu Modern for 1.20.1
+    implementation fg.deobf('curse.maven:gtceu-226410:5100000')
+    
+    // CodeChickenLib (dependency of GTCEu)
+    implementation fg.deobf('curse.maven:codechickenlib-242818:4750000')
+    
+    // LDLib (dependency of GTCEu Modern)
+    implementation fg.deobf('curse.maven:ldlib-626668:5000000')
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title"     : "gtcemodern-emc-addon",
+            "Specification-Vendor"    : "GTEMCAddon",
+            "Specification-Version"   : "1",
+            "Implementation-Title"    : project.name,
+            "Implementation-Version"  : project.version,
+            "Implementation-Vendor"   : "GTEMCAddon",
+        ])
+    }
+}

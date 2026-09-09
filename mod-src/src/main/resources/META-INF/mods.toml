@@ -1,0 +1,47 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="gtcemcaddon"
+version="1.0.0"
+displayName="GTCe Modern EMC Addon"
+description='''
+Автоматический расчёт и назначение EMC-стоимости для всех предметов и жидкостей 
+из GregTech CEu Modern через ProjectE API.
+
+Особенности:
+- Рекурсивный расчёт EMC на основе рецептов GT машин
+- Поддержка жидкостей с пропорциональным EMC за mB
+- Защита от зацикливания (лимит итераций)
+- Игнорирование chanced outputs с низким шансом
+- Настраиваемая конфигурация
+'''
+
+[[dependencies.gtcemcaddon]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gtcemcaddon]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gtcemcaddon]]
+    modId="projecte"
+    mandatory=true
+    versionRange="[1.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.gtcemcaddon]]
+    modId="gtceu"
+    mandatory=true
+    versionRange="[1.0,)"
+    ordering="AFTER"
+    side="BOTH"
