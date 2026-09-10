@@ -1,7 +1,6 @@
 package com.gtemc;
 
-import com.gtemc.config.GTEMCConfig;
-import com.gtemc.emc.GTEMCMapper;
+import com.gtemc.datapack.GTDatapackGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -14,8 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GTCe Modern EMC Addon - Главный класс мода.
- * Автоматически рассчитывает и назначает EMC-стоимость для всех предметов
- * и жидкостей из GregTech CEu Modern, используя ProjectE API.
+ * Генерирует датапак для ProjectE с EMC значениями для GregTech CEu Modern.
  */
 @Mod(GTEMCAddon.MOD_ID)
 public class GTEMCAddon {
@@ -25,21 +23,24 @@ public class GTEMCAddon {
 
     public GTEMCAddon() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        // Регистрация конфигурации
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GTEMCConfig.SPEC, "gtcemcaddon-common.toml");
-
-        // Инициализация при загрузке
+        
         modEventBus.addListener(this::commonSetup);
-
-        // Регистрация в Forge EventBus
         MinecraftForge.EVENT_BUS.register(this);
-
-        LOGGER.info("[GTEMCAddon] Мод инициализирован. Версия: {}", MOD_ID);
+        
+        LOGGER.info("[GTEMCAddon] Мод инициализирован");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("[GTEMCAddon] Common setup - регистрация EMC маппера");
-        GTEMCMapper.register();
+        LOGGER.info("[GTEMCAddon] Common setup - генерация датапака для ProjectE");
+        
+        // Генерируем датапак при загрузке
+        event.enqueueWork(() -> {
+            try {
+                GTDatapackGenerator.generateDatapack();
+                LOGGER.info("[GTEMCAddon] Датапак успешно сгенерирован");
+            } catch (Exception e) {
+                LOGGER.error("[GTEMCAddon] Ошибка при генерации датапака", e);
+            }
+        });
     }
 }
