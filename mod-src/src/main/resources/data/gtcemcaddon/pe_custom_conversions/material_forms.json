@@ -1,0 +1,130 @@
+{
+  "comment": "Material forms conversions for GregTech CEu Modern",
+  "groups": {
+    "iron_forms": {
+      "conversions": [
+        {"output": "gtceu:iron_plate", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.25}},
+        {"output": "gtceu:iron_double_plate", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.5}},
+        {"output": "gtceu:iron_dense_plate", "count": 1, "ingredients": {"gtceu:iron_ingot": 2.25}},
+        {"output": "gtceu:iron_rod", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.5}},
+        {"output": "gtceu:iron_long_rod", "count": 1, "ingredients": {"gtceu:iron_ingot": 1}},
+        {"output": "gtceu:iron_bolt", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.125}},
+        {"output": "gtceu:iron_screw", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.125}},
+        {"output": "gtceu:iron_ring", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.25}},
+        {"output": "gtceu:iron_foil", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.25}},
+        {"output": "gtceu:iron_gear", "count": 1, "ingredients": {"gtceu:iron_ingot": 4}},
+        {"output": "gtceu:iron_small_gear", "count": 1, "ingredients": {"gtceu:iron_ingot": 2}},
+        {"output": "gtceu:iron_wire", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.25}},
+        {"output": "gtceu:iron_fine_wire", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.125}},
+        {"output": "gtceu:iron_spring", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.5}},
+        {"output": "gtceu:iron_small_spring", "count": 1, "ingredients": {"gtceu:iron_ingot": 0.25}},
+        {"output": "gtceu:iron_frame", "count": 1, "ingredients": {"gtceu:iron_ingot": 2}},
+        {"output": "gtceu:iron_rotor", "count": 1, "ingredients": {"gtceu:iron_ingot": 4.25}},
+        {"output": "gtceu:iron_block", "count": 1, "ingredients": {"gtceu:iron_ingot": 9}},
+        {"output": "gtceu:iron_nugget", "count": 9, "ingredients": {"gtceu:iron_ingot": 1}},
+        {"output": "gtceu:small_iron_dust", "count": 4, "ingredients": {"gtceu:iron_dust": 1}},
+        {"output": "gtceu:tiny_iron_dust", "count": 9, "ingredients": {"gtceu:iron_dust": 1}}
+      ]
+    },
+    "gold_forms": {
+      "conversions": [
+        {"output": "gtceu:gold_plate", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.25}},
+        {"output": "gtceu:gold_double_plate", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.5}},
+        {"output": "gtceu:gold_dense_plate", "count": 1, "ingredients": {"gtceu:gold_ingot": 2.25}},
+        {"output": "gtceu:gold_rod", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.5}},
+        {"output": "gtceu:gold_long_rod", "count": 1, "ingredients": {"gtceu:gold_ingot": 1}},
+        {"output": "gtceu:gold_bolt", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.125}},
+        {"output": "gtceu:gold_screw", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.125}},
+        {"output": "gtceu:gold_ring", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.25}},
+        {"output": "gtceu:gold_foil", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.25}},
+        {"output": "gtceu:gold_gear", "count": 1, "ingredients": {"gtceu:gold_ingot": 4}},
+        {"output": "gtceu:gold_small_gear", "count": 1, "ingredients": {"gtceu:gold_ingot": 2}},
+        {"output": "gtceu:gold_wire", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.25}},
+        {"output": "gtceu:gold_fine_wire", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.125}},
+        {"output": "gtceu:gold_spring", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.5}},
+        {"output": "gtceu:gold_small_spring", "count": 1, "ingredients": {"gtceu:gold_ingot": 0.25}},
+        {"output": "gtceu:gold_frame", "count": 1, "ingredients": {"gtceu:gold_ingot": 2}},
+        {"output": "gtceu:gold_rotor", "count": 1, "ingredients": {"gtceu:gold_ingot": 4.25}},
+        {"output": "gtceu:gold_block", "count": 1, "ingredients": {"gtceu:gold_ingot": 9}},
+        {"output": "gtceu:gold_nugget", "count": 9, "ingredients": {"gtceu:gold_ingot": 1}},
+        {"output": "gtceu:small_gold_dust", "count": 4, "ingredients": {"gtceu:gold_dust": 1}},
+        {"output": "gtceu:tiny_gold_dust", "count": 9, "ingredients": {"gtceu:gold_dust": 1}}
+      ]
+    },
+    "copper_forms": {
+      "conversions": [
+        {"output": "gtceu:copper_plate", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.25}},
+        {"output": "gtceu:copper_double_plate", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.5}},
+        {"output": "gtceu:copper_dense_plate", "count": 1, "ingredients": {"gtceu:copper_ingot": 2.25}},
+        {"output": "gtceu:copper_rod", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.5}},
+        {"output": "gtceu:copper_long_rod", "count": 1, "ingredients": {"gtceu:copper_ingot": 1}},
+        {"output": "gtceu:copper_bolt", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.125}},
+        {"output": "gtceu:copper_screw", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.125}},
+        {"output": "gtceu:copper_ring", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.25}},
+        {"output": "gtceu:copper_foil", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.25}},
+        {"output": "gtceu:copper_gear", "count": 1, "ingredients": {"gtceu:copper_ingot": 4}},
+        {"output": "gtceu:copper_small_gear", "count": 1, "ingredients": {"gtceu:copper_ingot": 2}},
+        {"output": "gtceu:copper_wire", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.25}},
+        {"output": "gtceu:copper_fine_wire", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.125}},
+        {"output": "gtceu:copper_spring", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.5}},
+        {"output": "gtceu:copper_small_spring", "count": 1, "ingredients": {"gtceu:copper_ingot": 0.25}},
+        {"output": "gtceu:copper_frame", "count": 1, "ingredients": {"gtceu:copper_ingot": 2}},
+        {"output": "gtceu:copper_rotor", "count": 1, "ingredients": {"gtceu:copper_ingot": 4.25}},
+        {"output": "gtceu:copper_block", "count": 1, "ingredients": {"gtceu:copper_ingot": 9}},
+        {"output": "gtceu:copper_nugget", "count": 9, "ingredients": {"gtceu:copper_ingot": 1}},
+        {"output": "gtceu:small_copper_dust", "count": 4, "ingredients": {"gtceu:copper_dust": 1}},
+        {"output": "gtceu:tiny_copper_dust", "count": 9, "ingredients": {"gtceu:copper_dust": 1}}
+      ]
+    },
+    "tin_forms": {
+      "conversions": [
+        {"output": "gtceu:tin_plate", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.25}},
+        {"output": "gtceu:tin_double_plate", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.5}},
+        {"output": "gtceu:tin_dense_plate", "count": 1, "ingredients": {"gtceu:tin_ingot": 2.25}},
+        {"output": "gtceu:tin_rod", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.5}},
+        {"output": "gtceu:tin_long_rod", "count": 1, "ingredients": {"gtceu:tin_ingot": 1}},
+        {"output": "gtceu:tin_bolt", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.125}},
+        {"output": "gtceu:tin_screw", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.125}},
+        {"output": "gtceu:tin_ring", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.25}},
+        {"output": "gtceu:tin_foil", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.25}},
+        {"output": "gtceu:tin_gear", "count": 1, "ingredients": {"gtceu:tin_ingot": 4}},
+        {"output": "gtceu:tin_small_gear", "count": 1, "ingredients": {"gtceu:tin_ingot": 2}},
+        {"output": "gtceu:tin_wire", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.25}},
+        {"output": "gtceu:tin_fine_wire", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.125}},
+        {"output": "gtceu:tin_spring", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.5}},
+        {"output": "gtceu:tin_small_spring", "count": 1, "ingredients": {"gtceu:tin_ingot": 0.25}},
+        {"output": "gtceu:tin_frame", "count": 1, "ingredients": {"gtceu:tin_ingot": 2}},
+        {"output": "gtceu:tin_rotor", "count": 1, "ingredients": {"gtceu:tin_ingot": 4.25}},
+        {"output": "gtceu:tin_block", "count": 1, "ingredients": {"gtceu:tin_ingot": 9}},
+        {"output": "gtceu:tin_nugget", "count": 9, "ingredients": {"gtceu:tin_ingot": 1}},
+        {"output": "gtceu:small_tin_dust", "count": 4, "ingredients": {"gtceu:tin_dust": 1}},
+        {"output": "gtceu:tiny_tin_dust", "count": 9, "ingredients": {"gtceu:tin_dust": 1}}
+      ]
+    },
+    "steel_forms": {
+      "conversions": [
+        {"output": "gtceu:steel_plate", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.25}},
+        {"output": "gtceu:steel_double_plate", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.5}},
+        {"output": "gtceu:steel_dense_plate", "count": 1, "ingredients": {"gtceu:steel_ingot": 2.25}},
+        {"output": "gtceu:steel_rod", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.5}},
+        {"output": "gtceu:steel_long_rod", "count": 1, "ingredients": {"gtceu:steel_ingot": 1}},
+        {"output": "gtceu:steel_bolt", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.125}},
+        {"output": "gtceu:steel_screw", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.125}},
+        {"output": "gtceu:steel_ring", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.25}},
+        {"output": "gtceu:steel_foil", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.25}},
+        {"output": "gtceu:steel_gear", "count": 1, "ingredients": {"gtceu:steel_ingot": 4}},
+        {"output": "gtceu:steel_small_gear", "count": 1, "ingredients": {"gtceu:steel_ingot": 2}},
+        {"output": "gtceu:steel_wire", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.25}},
+        {"output": "gtceu:steel_fine_wire", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.125}},
+        {"output": "gtceu:steel_spring", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.5}},
+        {"output": "gtceu:steel_small_spring", "count": 1, "ingredients": {"gtceu:steel_ingot": 0.25}},
+        {"output": "gtceu:steel_frame", "count": 1, "ingredients": {"gtceu:steel_ingot": 2}},
+        {"output": "gtceu:steel_rotor", "count": 1, "ingredients": {"gtceu:steel_ingot": 4.25}},
+        {"output": "gtceu:steel_block", "count": 1, "ingredients": {"gtceu:steel_ingot": 9}},
+        {"output": "gtceu:steel_nugget", "count": 9, "ingredients": {"gtceu:steel_ingot": 1}},
+        {"output": "gtceu:small_steel_dust", "count": 4, "ingredients": {"gtceu:steel_dust": 1}},
+        {"output": "gtceu:tiny_steel_dust", "count": 9, "ingredients": {"gtceu:steel_dust": 1}}
+      ]
+    }
+  }
+}
