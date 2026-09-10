@@ -6,17 +6,7 @@ license="MIT"
 modId="gtcemcaddon"
 version="1.0.0"
 displayName="GTCe Modern EMC Addon"
-description='''
-Автоматический расчёт и назначение EMC-стоимости для всех предметов и жидкостей 
-из GregTech CEu Modern через ProjectE API.
-
-Особенности:
-- Рекурсивный расчёт EMC на основе рецептов GT машин
-- Поддержка жидкостей с пропорциональным EMC за mB
-- Защита от зацикливания (лимит итераций)
-- Игнорирование chanced outputs с низким шансом
-- Настраиваемая конфигурация
-'''
+description="Auto EMC values for GregTech CEu Modern via ProjectE datapack"
 
 [[dependencies.gtcemcaddon]]
     modId="forge"
