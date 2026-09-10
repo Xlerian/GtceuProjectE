@@ -710,8 +710,8 @@ public class GTEMCMapper {
      * Основной метод добавления EMC-маппингов.
      * Вызывается ProjectE при сборке EMC-карты.
      */
-    public static <T extends NormalizedSimpleStack<T, ?>> void addMappings(
-            IMappingCollector<T, Long> mapper) {
+    public static void addMappings(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         
         GTEMCAddon.LOGGER.info("[GTEMCAddon] Начинается расчёт EMC для GregTech...");
         long startTime = System.currentTimeMillis();
@@ -754,8 +754,8 @@ public class GTEMCMapper {
     /**
      * Сбор базовых EMC из ванильных предметов.
      */
-    private static <T extends NormalizedSimpleStack<T, ?>> void collectBaseEMC(
-            IMappingCollector<T, Long> mapper) {
+    private static void collectBaseEMC(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         
         Map<ItemStack, Long> vanillaEMC = getVanillaBaseEMC();
         for (Map.Entry<ItemStack, Long> entry : vanillaEMC.entrySet()) {
@@ -794,8 +794,8 @@ public class GTEMCMapper {
     /**
      * Расчёт EMC для предметных выходов рецептов.
      */
-    private static <T extends NormalizedSimpleStack<T, ?>> int processItemRecipes(
-            IMappingCollector<T, Long> mapper) {
+    private static int processItemRecipes(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         int newMappings = 0;
         
         for (GTRecipeType recipeType : getGTRecipeTypes()) {
@@ -831,8 +831,8 @@ public class GTEMCMapper {
     /**
      * Расчёт EMC для жидкостных выходов рецептов.
      */
-    private static <T extends NormalizedSimpleStack<T, ?>> int processFluidRecipes(
-            IMappingCollector<T, Long> mapper) {
+    private static int processFluidRecipes(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         int newMappings = 0;
         
         for (GTRecipeType recipeType : getGTRecipeTypes()) {
@@ -978,9 +978,9 @@ public class FluidEMCRegistry {
 
     /**
      * Инициализация реестра базовыми значениями.
+     * В ProjectE 1.20.1 NormalizedSimpleStack НЕ принимает дженерики!
      */
-    public static <T extends NormalizedSimpleStack<T, ?>> void initialize(
-            IMappingCollector<T, Long> mapper) {
+    public static void initialize(IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         
         registerBaseFluids();
         registerGTMaterialFluids();
@@ -1055,8 +1055,8 @@ public class FluidEMCRegistry {
     /**
      * Применение к мапперу ProjectE.
      */
-    private static <T extends NormalizedSimpleStack<T, ?>> void applyToMapper(
-            IMappingCollector<T, Long> mapper) {
+    private static void applyToMapper(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         for (Map.Entry<ResourceLocation, Long> entry : fluidEMCValues.entrySet()) {
             ResourceLocation fluidRL = entry.getKey();
             long emcPerBucket = entry.getValue();
@@ -1139,8 +1139,8 @@ public class RecipeWalker {
     /**
      * Запуск полного обхода рецептов.
      */
-    public <T extends NormalizedSimpleStack<T, ?>> int walkAllRecipes(
-            IMappingCollector<T, Long> mapper,
+    public int walkAllRecipes(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper,
             Map<ResourceLocation, Long> itemEMC,
             Map<ResourceLocation, Long> fluidEMC) {
         
@@ -1166,8 +1166,8 @@ public class RecipeWalker {
     /**
      * Один проход по всем рецептам.
      */
-    private <T extends NormalizedSimpleStack<T, ?>> int walkOnce(
-            IMappingCollector<T, Long> mapper,
+    private int walkOnce(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper,
             Map<ResourceLocation, Long> itemEMC,
             Map<ResourceLocation, Long> fluidEMC) {
         
@@ -1490,8 +1490,8 @@ public class EMCCalculator {
     /**
      * Применение всех значений к мапперу ProjectE.
      */
-    public <T extends NormalizedSimpleStack<T, ?>> void applyToMapper(
-            IMappingCollector<T, Long> mapper) {
+    public void applyToMapper(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         
         int appliedItems = 0, appliedFluids = 0, errors = 0;
         
@@ -1591,8 +1591,8 @@ public class GTEMCIntegration {
     /**
      * Основной метод интеграции с ProjectE.
      */
-    public <T extends NormalizedSimpleStack<T, ?>> void processMappings(
-            IMappingCollector<T, Long> mapper) {
+    public void processMappings(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         
         if (initialized) return;
         
@@ -1625,8 +1625,8 @@ public class GTEMCIntegration {
     /**
      * Инициализация базовых EMC значений.
      */
-    private <T extends NormalizedSimpleStack<T, ?>> void initializeBaseEMC(
-            IMappingCollector<T, Long> mapper) {
+    private void initializeBaseEMC(
+            IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         
         // Ванильные EMC
         Map<String, Long> baseItems = new LinkedHashMap<>();

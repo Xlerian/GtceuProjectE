@@ -2,30 +2,15 @@ package com.gtemc.emc;
 
 import com.gtemc.GTEMCAddon;
 import com.gtemc.config.GTEMCConfig;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import moze_intel.projecte.api.mapper.collector.IMappingCollector;
-import moze_intel.projecte.api.nss.NSSFluid;
-import moze_intel.projecte.api.nss.NSSItem;
 import moze_intel.projecte.api.nss.NormalizedSimpleStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
 /**
  * Интеграционный слой между GTEMCMapper и ProjectE API.
  * Управляет полным циклом расчёта EMC для GregTech CEu Modern.
- * 
- * Эта точка входа вызывается ProjectE при перестроении EMC-карты.
- * Она координирует работу всех компонентов:
- * - FluidEMCRegistry (базовые жидкости)
- * - RecipeWalker (обход рецептов)
- * - EMCCalculator (финальный расчёт и применение)
  */
 public class GTEMCIntegration {
 
@@ -52,9 +37,8 @@ public class GTEMCIntegration {
 
     /**
      * Основной метод интеграции с ProjectE.
-     * Вызывается при событии перестроения EMC-карты.
      */
-    public <T extends NormalizedSimpleStack<T, ?>> void processMappings(IMappingCollector<T, Long> mapper) {
+    public void processMappings(IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         if (initialized) {
             GTEMCAddon.LOGGER.warn("[GTEMCIntegration] Уже инициализирован, пропускаем повторный вызов");
             return;
@@ -102,8 +86,8 @@ public class GTEMCIntegration {
     /**
      * Инициализация базовых EMC значений.
      */
-    private <T extends NormalizedSimpleStack<T, ?>> void initializeBaseEMC(IMappingCollector<T, Long> mapper) {
-        // Базовые ванильные EMC (фундамент расчёта)
+    private void initializeBaseEMC(IMappingCollector<NormalizedSimpleStack, Long> mapper) {
+        // Базовые ванильные EMC
         Map<String, Long> baseItems = new LinkedHashMap<>();
         baseItems.put("minecraft:cobblestone", 1L);
         baseItems.put("minecraft:stone", 1L);
@@ -145,7 +129,6 @@ public class GTEMCIntegration {
         baseItems.put("minecraft:raw_gold", 2048L);
         baseItems.put("minecraft:raw_copper", 128L);
         
-        // Применяем базовые EMC предметов
         for (Map.Entry<String, Long> entry : baseItems.entrySet()) {
             ResourceLocation rl = new ResourceLocation(entry.getKey());
             calculator.addItemEMCCandidate(rl, entry.getValue());
@@ -170,7 +153,6 @@ public class GTEMCIntegration {
      * Регистрация базовых материалов GT как предметов с EMC.
      */
     private void registerBaseGTMaterials() {
-        // Материалы и их базовые EMC (за 1 слиток/пыль)
         Map<String, Long> materials = new LinkedHashMap<>();
         materials.put("iron", 256L);
         materials.put("gold", 2048L);
@@ -238,7 +220,6 @@ public class GTEMCIntegration {
         materials.put("polyphenylene_sulfide", 256L);
         materials.put("cellulose", 32L);
         
-        // Регистрируем все формы каждого материала
         for (Map.Entry<String, Long> entry : materials.entrySet()) {
             String materialName = entry.getKey();
             long baseEMC = entry.getValue();
@@ -253,7 +234,6 @@ public class GTEMCIntegration {
     private void registerAllForms(String materialName, long ingotEMC) {
         String ns = "gtceu";
         
-        // Формы и их множители относительно слитка
         Map<String, Double> forms = new LinkedHashMap<>();
         forms.put("ingot", 1.0);
         forms.put("dust", 1.0);

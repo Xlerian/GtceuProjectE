@@ -8,7 +8,6 @@ import moze_intel.projecte.api.nss.NSSItem;
 import moze_intel.projecte.api.nss.NormalizedSimpleStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -17,11 +16,6 @@ import java.util.*;
 /**
  * Калькулятор EMC для GregTech CEu Modern.
  * Финализирует расчёт и применяет значения к ProjectE.
- * 
- * Этот класс отвечает за:
- * 1. Применение рассчитанных EMC к мапперу ProjectE
- * 2. Разрешение конфликтов (если несколько рецептов дают разный EMC)
- * 3. Финальную валидацию значений
  */
 public class EMCCalculator {
 
@@ -32,14 +26,12 @@ public class EMCCalculator {
 
     /**
      * Добавление кандидата EMC для предмета.
-     * Если уже есть значение, выбирается минимальное (для предотвращения эксплойтов).
      */
     public void addItemEMCCandidate(ResourceLocation itemRL, long emc) {
         if (emc <= 0) return;
         
         itemEMCCandidates.computeIfAbsent(itemRL, k -> new ArrayList<>()).add(emc);
         
-        // Выбираем минимальное значение (защита от завышения через дорогие рецепты)
         long currentBest = itemEMC.getOrDefault(itemRL, Long.MAX_VALUE);
         if (emc < currentBest) {
             itemEMC.put(itemRL, emc);
@@ -54,7 +46,6 @@ public class EMCCalculator {
         
         fluidEMCCandidates.computeIfAbsent(fluidRL, k -> new ArrayList<>()).add(emcPerBucket);
         
-        // Для жидкостей тоже берём минимальное
         long currentBest = fluidEMC.getOrDefault(fluidRL, Long.MAX_VALUE);
         if (emcPerBucket < currentBest) {
             fluidEMC.put(fluidRL, emcPerBucket);
@@ -63,10 +54,6 @@ public class EMCCalculator {
 
     /**
      * Расчёт EMC предмета на основе рецепта.
-     * 
-     * @param inputs список входов (ItemStack или FluidStack)
-     * @param output выходной ItemStack
-     * @return рассчитанный EMC или -1 если не все ингредиенты имеют EMC
      */
     public long calculateItemEMCFromRecipe(List<Object> inputs, ItemStack output) {
         long totalInputEMC = 0;
@@ -87,22 +74,16 @@ public class EMCCalculator {
                 Long emcPerBucket = fluidEMC.get(fluidRL);
                 if (emcPerBucket == null) return -1;
                 
-                // Пропорционально: (emcPerBucket * amount) / 1000
                 int amount = fluidInput.getAmount();
                 totalInputEMC += (emcPerBucket * amount) / 1000L;
             }
         }
         
-        // EMC за единицу выхода
         return totalInputEMC / output.getCount();
     }
 
     /**
      * Расчёт EMC жидкости на основе рецепта.
-     * 
-     * @param inputs список входов (ItemStack или FluidStack)
-     * @param output выходной FluidStack
-     * @return EMC за 1000 mB или -1 если не все ингредиенты имеют EMC
      */
     public long calculateFluidEMCFromRecipe(List<Object> inputs, FluidStack output) {
         long totalInputEMC = 0;
@@ -128,7 +109,6 @@ public class EMCCalculator {
             }
         }
         
-        // EMC за 1000 mB выходной жидкости
         int outputAmount = output.getAmount();
         return (totalInputEMC * 1000L) / outputAmount;
     }
@@ -136,7 +116,7 @@ public class EMCCalculator {
     /**
      * Применение всех рассчитанных значений к мапперу ProjectE.
      */
-    public <T extends NormalizedSimpleStack<T, ?>> void applyToMapper(IMappingCollector<T, Long> mapper) {
+    public void applyToMapper(IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         GTEMCAddon.LOGGER.info("[EMCCalculator] Применение {} предметов и {} жидкостей к ProjectE...",
                 itemEMC.size(), fluidEMC.size());
         
@@ -144,7 +124,6 @@ public class EMCCalculator {
         int appliedFluids = 0;
         int errors = 0;
         
-        // Применяем EMC для предметов
         for (Map.Entry<ResourceLocation, Long> entry : itemEMC.entrySet()) {
             ResourceLocation rl = entry.getKey();
             long emc = entry.getValue();
@@ -161,7 +140,6 @@ public class EMCCalculator {
             }
         }
         
-        // Применяем EMC для жидкостей
         for (Map.Entry<ResourceLocation, Long> entry : fluidEMC.entrySet()) {
             ResourceLocation rl = entry.getKey();
             long emcPerBucket = entry.getValue();
@@ -184,12 +162,10 @@ public class EMCCalculator {
 
     /**
      * Валидация рассчитанных EMC.
-     * Проверяет, что все значения разумны (не отрицательные, не слишком большие).
      */
     public void validate() {
-        long maxReasonableEMC = 10_000_000_000L; // 10 миллиардов
+        long maxReasonableEMC = 10_000_000_000L;
         
-        // Валидация предметов
         itemEMC.entrySet().removeIf(entry -> {
             if (entry.getValue() <= 0) {
                 GTEMCAddon.LOGGER.warn("[EMCCalculator] Удалён невалидный EMC для предмета {}: {}",
@@ -204,7 +180,6 @@ public class EMCCalculator {
             return false;
         });
         
-        // Валидация жидкостей
         fluidEMC.entrySet().removeIf(entry -> {
             if (entry.getValue() <= 0) {
                 GTEMCAddon.LOGGER.warn("[EMCCalculator] Удалён невалидный EMC для жидкости {}: {}",
@@ -220,23 +195,14 @@ public class EMCCalculator {
         });
     }
 
-    /**
-     * Получение финальной карты EMC для предметов.
-     */
     public Map<ResourceLocation, Long> getItemEMC() {
         return Collections.unmodifiableMap(itemEMC);
     }
 
-    /**
-     * Получение финальной карты EMC для жидкостей.
-     */
     public Map<ResourceLocation, Long> getFluidEMC() {
         return Collections.unmodifiableMap(fluidEMC);
     }
 
-    /**
-     * Получение статистики кандидатов.
-     */
     public int getTotalCandidates() {
         int total = 0;
         for (List<Long> candidates : itemEMCCandidates.values()) {

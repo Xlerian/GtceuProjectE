@@ -32,7 +32,7 @@ public class FluidEMCRegistry {
     /**
      * Инициализация реестра базовыми значениями жидкостей.
      */
-    public static <T extends NormalizedSimpleStack<T, ?>> void initialize(IMappingCollector<T, Long> mapper) {
+    public static void initialize(IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         GTEMCAddon.LOGGER.info("[GTEMCAddon] Инициализация реестра жидкостей EMC...");
         
         // Базовые ванильные жидкости
@@ -174,7 +174,7 @@ public class FluidEMCRegistry {
     /**
      * Применение зарегистрированных значений к мапперу ProjectE.
      */
-    private static <T extends NormalizedSimpleStack<T, ?>> void applyToMapper(IMappingCollector<T, Long> mapper) {
+    private static void applyToMapper(IMappingCollector<NormalizedSimpleStack, Long> mapper) {
         for (Map.Entry<ResourceLocation, Long> entry : fluidEMCValues.entrySet()) {
             ResourceLocation fluidRL = entry.getKey();
             long emcPerBucket = entry.getValue();
