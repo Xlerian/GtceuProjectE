@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="gtupgradeslots"
+version="1.0.0"
+displayName="GT Upgrade Slots"
+description="Adds extra upgrade slots with accelerators to GregTech machines"
+
+[[dependencies.gtupgradeslots]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gtupgradeslots]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gtupgradeslots]]
+    modId="gtceu"
+    mandatory=true
+    versionRange="[1.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.gtupgradeslots]]
+    modId="kubejs"
+    mandatory=false
+    versionRange="[2001,)"
+    ordering="AFTER"
+    side="BOTH"

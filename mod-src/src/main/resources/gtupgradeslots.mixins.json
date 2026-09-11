@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.gtupgrades.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "gtupgradeslots.refmap.json",
+  "mixins": [
+    "MetaTileEntityMixin",
+    "RecipeLogicMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
