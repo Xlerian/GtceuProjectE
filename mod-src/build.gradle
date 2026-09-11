@@ -3,11 +3,12 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
 version = '1.0.0'
-group = 'com.gtemc'
-archivesBaseName = 'gtcemodern-emc-addon'
+group = 'com.gtupgrades'
+archivesBaseName = 'gtupgradeslots'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -28,6 +29,11 @@ minecraft {
     }
 }
 
+mixin {
+    add sourceSets.main, 'gtupgradeslots.refmap.json'
+    config 'gtupgradeslots.mixins.json'
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -35,22 +41,26 @@ repositories {
         url = 'https://www.cursemaven.com'
     }
     maven {
+        name = 'Sponge'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+    maven {
         name = 'JitPack'
         url = 'https://jitpack.io'
     }
     maven {
-        name = 'BlameJared'
-        url = 'https://maven.blamejared.com'
+        url = 'https://maven.saps.dev/releases'
+        content {
+            includeGroup 'dev.latvian.mods'
+        }
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
-
-    // ProjectE for Minecraft 1.20.1
-    implementation fg.deobf('curse.maven:projecte-226410:4860000')
-
-    // GregTech CEu Modern for 1.20.1
+    
+    // GregTech CEu Modern для 1.20.1
+    // Найдите актуальный file ID на curseforge.com
     implementation fg.deobf('curse.maven:gtceu-226410:5100000')
     
     // CodeChickenLib (dependency of GTCEu)
@@ -58,17 +68,26 @@ dependencies {
     
     // LDLib (dependency of GTCEu Modern)
     implementation fg.deobf('curse.maven:ldlib-626668:5000000')
+    
+    // KubeJS для 1.20.1
+    implementation fg.deobf('dev.latvian.mods:kubejs-forge:2001.6.5-build.16')
+    implementation fg.deobf('dev.latvian.mods:rhino:2001.2.3-build.10')
+    implementation fg.deobf('dev.latvian.mods:architectury-forge:9.2.14')
+    
+    // Mixin
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 jar {
     manifest {
         attributes([
-            "Specification-Title"     : "gtcemodern-emc-addon",
-            "Specification-Vendor"    : "GTEMCAddon",
+            "Specification-Title"     : "gtupgradeslots",
+            "Specification-Vendor"    : "GTUpgradeSlots",
             "Specification-Version"   : "1",
             "Implementation-Title"    : project.name,
             "Implementation-Version"  : project.version,
-            "Implementation-Vendor"   : "GTEMCAddon",
+            "Implementation-Vendor"   : "GTUpgradeSlots",
+            "MixinConfigs"            : "gtupgradeslots.mixins.json"
         ])
     }
 }

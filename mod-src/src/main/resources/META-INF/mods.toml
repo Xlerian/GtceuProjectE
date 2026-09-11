@@ -3,35 +3,35 @@ loaderVersion="[47,)"
 license="MIT"
 
 [[mods]]
-modId="gtcemcaddon"
+modId="gtupgradeslots"
 version="1.0.0"
-displayName="GTCe Modern EMC Addon"
-description="Auto EMC values for GregTech CEu Modern via ProjectE datapack"
+displayName="GT Upgrade Slots"
+description="Adds extra upgrade slots with accelerators to GregTech machines"
 
-[[dependencies.gtcemcaddon]]
+[[dependencies.gtupgradeslots]]
     modId="forge"
     mandatory=true
     versionRange="[47,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.gtcemcaddon]]
+[[dependencies.gtupgradeslots]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20.1,1.21)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.gtcemcaddon]]
-    modId="projecte"
+[[dependencies.gtupgradeslots]]
+    modId="gtceu"
     mandatory=true
     versionRange="[1.0,)"
     ordering="AFTER"
     side="BOTH"
 
-[[dependencies.gtcemcaddon]]
-    modId="gtceu"
-    mandatory=true
-    versionRange="[1.0,)"
+[[dependencies.gtupgradeslots]]
+    modId="kubejs"
+    mandatory=false
+    versionRange="[2001,)"
     ordering="AFTER"
     side="BOTH"
